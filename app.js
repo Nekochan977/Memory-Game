@@ -57,11 +57,17 @@ const cardArray = [
     },
 ]
 
+
 // Grab a couple of things
 
 const section = document.querySelector("section")
 const playerLivesCount =  document.querySelector("span")
 const playerLives = 6
+const backImage = {
+    name: 'Checkered Pattern',
+    // id: '2',
+    img: './assets/checkered-pattern.png'
+}
 
 //Link text
 playerLivesCount.textContent = playerLives
@@ -131,17 +137,29 @@ const randomize = () => {
     const cardData = getData()
     cardData.sort(() => Math.random() - 0.5)
     return cardData
-    // console.log(cardData)
 }
 
 //Card generator function
 const cardGenerator = () => {
     const cardData = randomize()
-    //Generate the html
-    const card = document.createElement('div')
-    const face = document.createElement("img")
-    const back = document.createElement("div")
+    cardData.forEach((item) =>{
 
-    console.log(cardData)
+        //Generate the html
+        const card = document.createElement('div')
+        const face = document.createElement("img")
+        const back = document.createElement("img")
+        card.classList = 'card'
+        face.classList = 'face'
+        back.classList = 'back'
+
+        //Attach the info for images
+        face.src = item.img
+        back.src = backImage.img
+
+        //Attach the cards to the section
+        section.appendChild(card)
+        card.appendChild(face)
+        card.appendChild(back)
+    })
 }
 cardGenerator()
