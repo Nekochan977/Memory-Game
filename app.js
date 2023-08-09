@@ -154,7 +154,9 @@ const cardGenerator = () => {
 
         //Attach the info for images
         face.src = item.img
+        face.alt = item.name
         back.src = backImage.img
+        back.alt = backImage.name
 
         //Attach the cards to the section
         section.appendChild(card)
