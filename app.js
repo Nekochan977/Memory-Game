@@ -142,7 +142,6 @@ const randomize = () => {
 //Card generator function
 const cardGenerator = () => {
     const cardData = randomize()
-    const cards = document.querySelectorAll('.card')
     cardData.forEach((item) =>{
 
         //Generate the html
@@ -179,6 +178,7 @@ const checkCard = (e) => {
     const clickedCard = e.target
     clickedCard.classList.add('flipped')
     const flippedCards = document.querySelectorAll('.flipped')
+    const toggleCard = document.querySelectorAll('.toggleCard')
 
     // console.log(clickedCard)
     // Add logic
@@ -200,27 +200,38 @@ const checkCard = (e) => {
             playerLivesCount.textContent = playerLives
 
             if (playerLives === 0) {
-                alert("You lose! Same player play again!")
-                resetGame()
+                resetGame("👎 You lose")
             }
         }
     }
+    // check if won the game
+    console.log(section.children.length)
+    if (toggleCard.length === section.children.length) {
+        resetGame("🫶You win")
+    }
+
 }
 
 //Reset game
 
-const resetGame = () => {
+const resetGame = (text) => {
     let carData = randomize()
     let faces = document.querySelectorAll(".face")
     let cards = document.querySelectorAll(".card")
+    //remove pointer events till all the cards flipped back
+    section.style.pointerEvents ='none'
     carData.forEach((item, index) => {
         cards[index].classList.remove("toggleCard")
         //Randomize
-        cards[index].style.pointerEvents = 'all'
-        faces[index].src = item.img
-        cards[index].setAttribute('name', item.name)
+        setTimeout(() => {
+            cards[index].style.pointerEvents = 'all'
+            faces[index].src = item.img
+            cards[index].setAttribute('name', item.name)
+            section.style.pointerEvents ='all'
+        }, 1000)
     })
     playerLives = 6
     playerLivesCount.textContent = playerLives
+    setTimeout(() => window.alert(text), 100)
 }
 cardGenerator()
