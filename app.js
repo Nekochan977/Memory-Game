@@ -62,7 +62,7 @@ const cardArray = [
 
 const section = document.querySelector("section")
 const playerLivesCount =  document.querySelector("span")
-const playerLives = 6
+let playerLives = 6
 const backImage = {
     name: 'Checkered Pattern',
     // id: '2',
@@ -196,7 +196,31 @@ const checkCard = (e) => {
                 card.classList.remove("flipped")
                 setTimeout(() => card.classList.remove("toggleCard"), 1000)
             })
+            playerLives--
+            playerLivesCount.textContent = playerLives
+
+            if (playerLives === 0) {
+                alert("You lose! Same player play again!")
+                resetGame()
+            }
         }
     }
+}
+
+//Reset game
+
+const resetGame = () => {
+    let carData = randomize()
+    let faces = document.querySelectorAll(".face")
+    let cards = document.querySelectorAll(".card")
+    carData.forEach((item, index) => {
+        cards[index].classList.remove("toggleCard")
+        //Randomize
+        cards[index].style.pointerEvents = 'all'
+        faces[index].src = item.img
+        cards[index].setAttribute('name', item.name)
+    })
+    playerLives = 6
+    playerLivesCount.textContent = playerLives
 }
 cardGenerator()
